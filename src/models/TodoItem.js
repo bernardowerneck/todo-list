@@ -25,4 +25,17 @@ export class TodoItem {
   get isChecked() {
     return this._isChecked;
   }
+
+  toggleChecked() {
+    this._isChecked = !this._isChecked;
+  }
+
+  get dto() {
+    return {
+      id: this._id,
+      title: this._title,
+      description: this._description,
+      isChecked: this._isChecked,
+    };
+  }
 }

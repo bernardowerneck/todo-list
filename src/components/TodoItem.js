@@ -1,6 +1,6 @@
 import "./TodoItem.css";
 
-function TodoItem({ todoItem }) {
+function TodoItem({ todoItem, onToggleItemCheck }) {
   const checkedClass = todoItem.isChecked ? "checked" : "not-checked";
   return (
     <div className="todo-item">
@@ -8,7 +8,10 @@ function TodoItem({ todoItem }) {
         <h2 className="title">{todoItem.title}</h2>
         <div className="description">{todoItem.description}</div>
       </div>
-      <div className={`is-checked ${checkedClass}`}></div>
+      <div
+        className={`is-checked ${checkedClass}`}
+        onClick={() => onToggleItemCheck(todoItem)}
+      ></div>
     </div>
   );
 }
