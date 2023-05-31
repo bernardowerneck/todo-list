@@ -1,0 +1,23 @@
+.todo-item {
+  display: flex;
+  flex-direction: row;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.is-checked {
+  width: 20px;
+  height: 20px;
+}
+
+.is-checked.checked {
+  background-color: green;
+}
+
+.is-checked.not-checked {
+  background-color: red;
+}
