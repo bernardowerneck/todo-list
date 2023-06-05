@@ -1,0 +1,9 @@
+.new-item-fields {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.new-item-fields > .field {
+  flex-grow: 1;
+}

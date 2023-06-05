@@ -17,8 +17,13 @@ function TodosScreen() {
   };
 
   const onNewItem = (dto) => {
-    TodoItemRepository.newTodoItem(dto);
-    refreshItems();
+    try {
+      TodoItemRepository.newTodoItem(dto);
+      refreshItems();
+    } catch (e) {
+      console.error(e.message);
+      // mensagem de erro
+    }
   };
 
   const refreshItems = () => setTodoItems(TodoItemRepository.getAllTodoItems());
@@ -32,10 +37,12 @@ function TodosScreen() {
   ));
 
   return (
-    <div className="app">
-      <h1 className="title">My todo app</h1>
-      <div className="todo-list">{todoComponents}</div>
-      <NewItemFields onNewItem={onNewItem} />
+    <div className="app-wrapper">
+      <div className="app">
+        <h1 className="title">My todo app</h1>
+        <div className="todo-list">{todoComponents}</div>
+        <NewItemFields onNewItem={onNewItem} />
+      </div>
     </div>
   );
 }

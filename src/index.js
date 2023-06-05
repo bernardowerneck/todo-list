@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
+import "bootstrap/dist/css/bootstrap.css";
 import TodosScreen from "./views/TodosScreen";
 import reportWebVitals from "./reportWebVitals";
 

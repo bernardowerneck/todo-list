@@ -22,6 +22,9 @@ export class TodoItemRepository {
   }
 
   static newTodoItem(dto) {
+    if (!dto.title) {
+      throw new Error("Não pode ser criada tarefa sem nome");
+    }
     dto.id = TodoItemRepository.lastId + 1;
     dto.isChecked = false;
     myTodoItemsDTO.push(dto);

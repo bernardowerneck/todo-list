@@ -19,9 +19,22 @@ function NewItemFields({ onNewItem }) {
   };
   return (
     <div className="new-item-fields">
-      <input value={title} onChange={updateTitle} />
-      <input value={description} onChange={updateDescription} />
-      <button onClick={createItem}>Add</button>
+      <div className="field">
+        <label for="title">Tarefa</label>
+        <input id="title" value={title} onChange={updateTitle} />
+      </div>
+      <div className="field">
+        <label for="description">Descrição</label>
+        <input
+          id="description"
+          value={description}
+          onChange={updateDescription}
+        />
+      </div>
+
+      <button class="btn btn-primary" onClick={createItem}>
+        Add
+      </button>
     </div>
   );
 }
