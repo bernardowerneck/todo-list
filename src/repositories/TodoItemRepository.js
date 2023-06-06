@@ -1,24 +1,20 @@
 import { TodoItem } from "../models/TodoItem";
-
-let myTodoItemsDTO = [
-  { id: 1, title: "example", description: "example", isChecked: true },
-  {
-    id: 2,
-    title: "example not done",
-    description: "esse example não foi done",
-    isChecked: false,
-  },
-];
+import { TodoItemPersistency } from "./TodoItemPersistency";
 
 export class TodoItemRepository {
-  static getAllTodoItems() {
-    return myTodoItemsDTO.map((dto) => TodoItem.fromDTO(dto));
+  static _localTodoItems = null;
+  static async getAllTodoItems() {
+    if (!TodoItemRepository._localTodoItems)
+      await TodoItemRepository._refreshLocalItems();
+
+    return TodoItemRepository._localTodoItems;
   }
 
   static updateTodoItem(id, dto) {
-    myTodoItemsDTO = myTodoItemsDTO.map((item) =>
-      id === item.id ? dto : item
+    TodoItemRepository._localTodoItems = TodoItemRepository._localTodoItems.map(
+      (item) => (id === item.id ? TodoItem.fromDTO(dto) : item)
     );
+    TodoItemPersistency.updateItem(id, dto);
   }
 
   static newTodoItem(dto) {
@@ -27,18 +23,28 @@ export class TodoItemRepository {
     }
     dto.id = TodoItemRepository.lastId + 1;
     dto.isChecked = false;
-    myTodoItemsDTO.push(dto);
+    TodoItemRepository._localTodoItems =
+      TodoItemRepository._localTodoItems.concat([TodoItem.fromDTO(dto)]);
+    TodoItemPersistency.createItem(dto);
     return TodoItem.fromDTO(dto);
   }
 
   static deleteItem(deleteId) {
-    myTodoItemsDTO = myTodoItemsDTO.filter(({ id }) => id !== deleteId);
+    TodoItemRepository._localTodoItems =
+      TodoItemRepository._localTodoItems.filter(({ id }) => id !== deleteId);
+    TodoItemPersistency.deleteItem(deleteId);
   }
 
   static get lastId() {
-    return myTodoItemsDTO.reduce(
+    return TodoItemRepository._localTodoItems.reduce(
       (acc, curr) => (acc > curr.id ? acc : curr.id),
       0
     );
+  }
+
+  static async _refreshLocalItems() {
+    TodoItemRepository._localTodoItems = (
+      await TodoItemPersistency.getTodoItems()
+    ).map((dto) => TodoItem.fromDTO(dto));
   }
 }

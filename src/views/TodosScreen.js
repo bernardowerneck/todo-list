@@ -6,9 +6,15 @@ import { TodoItemRepository } from "../repositories/TodoItemRepository";
 import "./TodosScreen.css";
 
 function TodosScreen() {
-  const [todoItems, setTodoItems] = useState(
-    TodoItemRepository.getAllTodoItems()
-  );
+  const [todoItems, setTodoItems] = useState(null);
+  // console.log("asdf");
+  const refreshItems = (force = true) => {
+    if (!force && todoItems) return;
+    TodoItemRepository.getAllTodoItems().then((items) => {
+      setTodoItems(items);
+    });
+  };
+  refreshItems(false);
 
   const toggleItemCheck = (item) => {
     item.toggleChecked();
@@ -22,13 +28,11 @@ function TodosScreen() {
       refreshItems();
     } catch (e) {
       console.error(e.message);
-      // mensagem de erro
+      // modal de erro
     }
   };
 
-  const refreshItems = () => setTodoItems(TodoItemRepository.getAllTodoItems());
-
-  const todoComponents = todoItems.map((item) => (
+  const todoComponents = todoItems?.map((item) => (
     <TodoItem
       todoItem={item}
       key={item.id}
