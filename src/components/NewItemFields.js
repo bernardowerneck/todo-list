@@ -20,11 +20,11 @@ function NewItemFields({ onNewItem }) {
   return (
     <div className="new-item-fields">
       <div className="field">
-        <label for="title">Tarefa</label>
+        <label htmlFor="title">Tarefa</label>
         <input id="title" value={title} onChange={updateTitle} />
       </div>
       <div className="field">
-        <label for="description">Descrição</label>
+        <label htmlFor="description">Descrição</label>
         <input
           id="description"
           value={description}
@@ -32,7 +32,7 @@ function NewItemFields({ onNewItem }) {
         />
       </div>
 
-      <button class="btn btn-primary" onClick={createItem}>
+      <button className="btn btn-primary" onClick={createItem}>
         Add
       </button>
     </div>
